@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <AvailabilityMacros.h>
 
-
+@class SVPullToRefreshGifView;
 @class SVPullToRefreshView;
 
 @interface UIScrollView (SVPullToRefresh)

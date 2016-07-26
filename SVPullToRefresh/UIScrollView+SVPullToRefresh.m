@@ -9,12 +9,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIScrollView+SVPullToRefresh.h"
+#import "SVPullToRefreshGifView.h"
 
 //fequal() and fequalzro() from http://stackoverflow.com/a/1614761/184130
 #define fequal(a,b) (fabs((a) - (b)) < FLT_EPSILON)
 #define fequalzero(a) (fabs(a) < FLT_EPSILON)
 
-static CGFloat const SVPullToRefreshViewHeight = 60;
+static CGFloat SVPullToRefreshViewHeight = 60;
 
 @interface SVPullToRefreshArrow : UIView
 
@@ -228,6 +229,7 @@ static char UIScrollViewPullToRefreshView;
         CGRect viewBounds = [customView bounds];
         CGPoint origin = CGPointMake(roundf((self.bounds.size.width-viewBounds.size.width)/2), roundf((self.bounds.size.height-viewBounds.size.height)/2));
         [customView setFrame:CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)];
+        SVPullToRefreshViewHeight = viewBounds.size.height;
     }
     else {
         switch (self.state) {
@@ -640,9 +642,15 @@ static char UIScrollViewPullToRefreshView;
     [self setNeedsLayout];
     [self layoutIfNeeded];
     
+    //动画视图
+    SVPullToRefreshGifView *gifView = (SVPullToRefreshGifView *)[self.viewForState objectAtIndex:newState];
+    
     switch (newState) {
         case SVPullToRefreshStateAll:
         case SVPullToRefreshStateStopped:
+            if (gifView) {
+                [gifView stopLoading];//停止动画
+            }
             [self resetScrollViewContentInset];
             break;
             
@@ -650,6 +658,9 @@ static char UIScrollViewPullToRefreshView;
             break;
             
         case SVPullToRefreshStateLoading:
+            if (gifView) {
+                [gifView startLoading];//开始动画
+            }
             [self setScrollViewContentInsetForLoading];
             
             if(previousState == SVPullToRefreshStateTriggered && pullToRefreshActionHandler)

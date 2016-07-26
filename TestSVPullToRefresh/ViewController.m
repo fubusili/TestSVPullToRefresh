@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SVPullToRefresh.h"
+#import "SVPullToRefreshGifView.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -25,7 +26,7 @@
     __weak typeof(self) weakSelf  = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         
-        int64_t delayInSeconds = 2.0;
+        int64_t delayInSeconds = 3.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
@@ -37,6 +38,11 @@
         });
         
     }];
+    SVPullToRefreshGifView *gifView = [[SVPullToRefreshGifView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,100)];
+    [self.tableView.pullToRefreshView setCustomView:gifView forState:SVPullToRefreshStateLoading];
+    [self.tableView.pullToRefreshView setCustomView:gifView forState:SVPullToRefreshStateStopped];
+    [self.tableView.pullToRefreshView setCustomView:gifView forState:SVPullToRefreshStateTriggered];
+    
 }
 
 - (void)didReceiveMemoryWarning {
