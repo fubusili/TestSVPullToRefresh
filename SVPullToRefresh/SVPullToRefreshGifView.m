@@ -74,6 +74,9 @@
     if (!_animationImages) {
         _animationImages = [NSMutableArray array];
         for (int i = 1; i < 10; i ++ ) {
+            
+//            NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"re%d",i] ofType:@"png"];
+//            [_animationImages addObject:[UIImage imageWithContentsOfFile:path]];
             [_animationImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"re%d",i]]];
         }
 //        [_animationImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"re%d",(int)pow(2, 0)]]];

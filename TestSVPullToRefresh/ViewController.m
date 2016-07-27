@@ -64,6 +64,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = [[self.dataSources objectAtIndex:indexPath.row] description];
+    cell.contentView.backgroundColor = [UIColor colorWithHue:( arc4random() % 256 / 256.0 )
+                                      saturation:( arc4random() % 256 / 256.0 ) + 0.5
+                                      brightness:( arc4random() % 256 / 256.0 ) + 0.5
+                                           alpha:1];
     return cell;
 }
 
@@ -71,7 +75,7 @@
 - (UITableView *)tableView {
 
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 20)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
@@ -82,7 +86,7 @@
 
     if (!_dataSources) {
         _dataSources = [NSMutableArray new];
-        for (int i = 0; i < 10; i ++) {
+        for (int i = 0; i < 20; i ++) {
             [_dataSources addObject:[NSDate date]];
         }
     }

@@ -398,6 +398,8 @@ static char UIScrollViewPullToRefreshView;
         switch (self.position) {
             case SVPullToRefreshPositionTop:
                 scrollOffsetThreshold = self.frame.origin.y - self.originalTopInset;
+                UIEdgeInsets contentInset;
+                self.scrollView.contentInset = UIEdgeInsetsMake(contentInset.top, contentInset.left, contentInset.bottom, contentInset.right);
                 break;
             case SVPullToRefreshPositionBottom:
                 scrollOffsetThreshold = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height, 0.0f) + self.bounds.size.height + self.originalBottomInset;
